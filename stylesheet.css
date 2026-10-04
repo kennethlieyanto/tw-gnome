@@ -1,0 +1,82 @@
+.taskwarrior-panel-label {
+    max-width: 320px;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+.taskwarrior-menu-item {
+    padding: 0;
+}
+
+.taskwarrior-root {
+    min-width: 440px;
+    max-width: 560px;
+    padding: 14px;
+    spacing: 10px;
+}
+
+.taskwarrior-header {
+    spacing: 8px;
+    padding-bottom: 2px;
+}
+
+.taskwarrior-title {
+    font-size: 1.15em;
+    font-weight: 700;
+}
+
+.taskwarrior-count,
+.taskwarrior-status,
+.taskwarrior-empty-state {
+    opacity: 0.7;
+}
+
+.taskwarrior-status-error {
+    color: #e01b24;
+    opacity: 1;
+}
+
+.taskwarrior-scroll-view {
+    min-height: 80px;
+    max-height: 440px;
+}
+
+.taskwarrior-task-list {
+    spacing: 6px;
+}
+
+.taskwarrior-task-row {
+    spacing: 9px;
+    padding: 9px;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.12);
+}
+
+.taskwarrior-task-row-urgent {
+    background-color: rgba(53, 132, 228, 0.2);
+}
+
+.taskwarrior-task-description {
+    font-weight: 600;
+}
+
+.taskwarrior-task-metadata {
+    margin-top: 3px;
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.taskwarrior-complete-button {
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.taskwarrior-complete-button:hover,
+.taskwarrior-complete-button:focus {
+    color: #33d17a;
+    background-color: rgba(128, 128, 128, 0.18);
+}
+
+.taskwarrior-empty-state {
+    padding: 28px 12px;
+}

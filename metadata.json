@@ -1,0 +1,8 @@
+{
+  "uuid": "taskwarrior@kennethl.dev",
+  "name": "Taskwarrior",
+  "description": "Show and complete started Taskwarrior tasks from the GNOME panel.",
+  "shell-version": ["50"],
+  "version-name": "0.1.0",
+  "settings-schema": "org.gnome.shell.extensions.taskwarrior"
+}

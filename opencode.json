@@ -1,0 +1,9 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "references": {
+        "taskdock": {
+            "path": "../../github/TaskDock",
+            "description": "Use this as a reference for gnome extension that does similiar thing but not using taskwarrior"
+        }
+    }
+}
