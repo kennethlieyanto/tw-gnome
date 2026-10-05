@@ -124,9 +124,15 @@ export default class TaskwarriorExtension extends Extension {
             return;
         this._refreshing = true;
         try {
+            const contextFilter = await this._client.getActiveContextFilter(
+                this._cancellable
+            );
             const [urgent, tasks] = await Promise.all([
-                this._client.getMostUrgentStartedTask(this._cancellable),
-                this._client.getStartedTasks(this._cancellable),
+                this._client.getMostUrgentStartedTask(
+                    contextFilter,
+                    this._cancellable
+                ),
+                this._client.getStartedTasks(contextFilter, this._cancellable),
             ]);
             this._panelLabel.text = urgent
                 ? truncate(urgent.description, this._settings.get_int('panel-max-length'))

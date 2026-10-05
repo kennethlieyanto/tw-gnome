@@ -34,4 +34,4 @@ Run the parser tests with:
 gjs -m tests/test-taskwarrior.js
 ```
 
-The extension invokes Taskwarrior with structured export commands (`task +ACTIVE limit:1 export next` and `task +ACTIVE export next`) and does not send task data anywhere.
+The extension reads the active Taskwarrior context and its `context.<name>.read` filter from Taskwarrior's effective configuration, then applies that read filter explicitly to its structured export commands because `export` does not apply report context automatically. It does not send task data anywhere.

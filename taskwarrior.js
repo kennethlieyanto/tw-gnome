@@ -35,6 +35,44 @@ export function parseExport(text) {
     return tasks.map(normalizeTask).filter(task => task !== null);
 }
 
+export function parseContext(text) {
+    let activeContext = '';
+    const readFilters = new Map();
+
+    for (const line of text.split('\n')) {
+        const separator = line.indexOf('=');
+        if (separator < 0)
+            continue;
+
+        const name = line.slice(0, separator);
+        const value = line.slice(separator + 1).trim();
+        if (name === 'context') {
+            activeContext = value;
+        } else if (name.startsWith('context.') && name.endsWith('.read')) {
+            const contextName = name.slice('context.'.length, -'.read'.length);
+            readFilters.set(contextName, value);
+        }
+    }
+
+    if (!activeContext || activeContext === 'none')
+        return {name: 'none', filter: []};
+
+    const filter = readFilters.get(activeContext);
+    if (filter === undefined)
+        throw new TaskwarriorError(
+            `Taskwarrior context '${activeContext}' has no read filter.`
+        );
+
+    return {
+        name: activeContext,
+        filter: filter ? ['(', ...filter.split(/\s+/), ')'] : [],
+    };
+}
+
+export function parseContextFilter(text) {
+    return parseContext(text).filter;
+}
+
 function runTask(args, cancellable) {
     return new Promise((resolve, reject) => {
         let process;
@@ -65,17 +103,22 @@ function runTask(args, cancellable) {
 }
 
 export class TaskwarriorClient {
-    async getMostUrgentStartedTask(cancellable = null) {
+    async getActiveContextFilter(cancellable = null) {
+        const output = await runTask(['_show'], cancellable);
+        return parseContext(output).filter;
+    }
+
+    async getMostUrgentStartedTask(contextFilter = [], cancellable = null) {
         const output = await runTask(
-            ['+ACTIVE', 'limit:1', 'export', 'next'],
+            [...contextFilter, '+ACTIVE', 'limit:1', 'export', 'next'],
             cancellable
         );
         return parseExport(output)[0] ?? null;
     }
 
-    async getStartedTasks(cancellable = null) {
+    async getStartedTasks(contextFilter = [], cancellable = null) {
         const output = await runTask(
-            ['+ACTIVE', 'export', 'next'],
+            [...contextFilter, '+ACTIVE', 'export', 'next'],
             cancellable
         );
         return parseExport(output);
